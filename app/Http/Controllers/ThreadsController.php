@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Thread;
 use App\Models\Channel;
 use Illuminate\Http\Request;
+use App\Filters\ThreadFilters;
 
 class ThreadsController extends Controller
 {
@@ -19,22 +20,25 @@ class ThreadsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel)
+    public function index(Channel $channel, ThreadFilters $filters)
     {
-        if ($channel->exists) {
+
+       if ($channel->exists) {
 
             $threads = $channel->threads()->latest();
 
-        }  else {
-             $threads = Thread::latest();
-        }
+          }  else {
+            $threads = Thread::latest();
+       }
 
-        if ($username = request('by')) {
+       // if request('by), we should filter by the given username
+         if ($username = request('by')) {
             $user = User::where('name', $username)->firstOrFail();
-            $threads->where('user_id', $user->id);
-         }
 
-         $threads = $threads->get();
+           $threads->where('user_id', $user->id);
+       }
+
+        $threads = $threads->get();
 
         return view('threads.index', compact('threads'));
     }
@@ -118,4 +122,5 @@ class ThreadsController extends Controller
     {
         //
     }
+
 }
