@@ -27,5 +27,7 @@ Route::get('/threads/{channel}/{thread}', [App\Http\Controllers\ThreadsControlle
 Route::post('/threads', [App\Http\Controllers\ThreadsController::class, 'store'])->name('store');
 Route::get('/threads/{channel}', [App\Http\Controllers\ThreadsController::class, 'index'])->name('threads');
 Route::post('/threads/{channel}/{thread}/replies', [App\Http\Controllers\RepliesController::class, 'store'])->name('store');
+Route::post('/replies/{reply}/favorites', [App\Http\Controllers\FavoritesController::class, 'store'])->name('store');
+
 
 
