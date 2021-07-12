@@ -1,26 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
-use App\Favoritable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
-class Reply extends Model
+trait Favoritable
 {
-    use HasFactory;
-
-    use Favoritable;
-
-
-    protected $guarded = [];
-
-    protected $with = ['owner', 'favorites'];
-
-    public function owner()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
 
     public function favorites()
     {
