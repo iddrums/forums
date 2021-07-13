@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 class Thread extends Model
 {
     use HasFactory;
+
+    use RecordsActivity;
 
     protected $guarded = [];
 
@@ -28,6 +31,7 @@ class Thread extends Model
         $thread->replies()->delete();
         });
     }
+
 
     public function path()
 
