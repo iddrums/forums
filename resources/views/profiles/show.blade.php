@@ -16,8 +16,8 @@
                     <div class="card-header">
                         <div class="level">
                             <span>
-                                <a href="#">{{ $thread->creator->name }} </a> posted:
-                                {{ $thread->title }}
+                                <a href="{{ route('profiles.user', $thread->creator) }}">{{ $thread->creator->name }} </a> posted:
+                                <a href="{{ $thread->path() }}"> {{ $thread->title }}</a>
                             </span>
 
                             <span class="flex">
