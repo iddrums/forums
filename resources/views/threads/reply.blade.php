@@ -16,6 +16,7 @@
                         {{ $reply->favorites_count }} {{ Str::plural('Favorite', $reply->favorites_count) }}
                     </button>
                     </form>
+                    {{ $reply->body }}
                 </div>
             </div>
             </div>
@@ -33,16 +34,10 @@
             </div>
 
             @can ('update', $reply)
-            <div class="card-footer level">
+              <div class="card-footer level">
                 <button class="btn btn-xs mr-1" @click="editing = true">Edit</button>
-
-                <form method="POST" action="/replies/{{ $reply->id }}">
-                    {{ csrf_field() }}
-                    {{ method_field('DELETE') }}
-
-                <button type="submit" class="btn btn-danger btn-xs">Delete</button>
-                </form>
-            </div>
+                <button class="btn btn-xs btn-danger mr-1" @click="destroy">Delete</button>
+              </div>
             @endcan
         </div>
     </div>
