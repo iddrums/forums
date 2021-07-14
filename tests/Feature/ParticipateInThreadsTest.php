@@ -72,16 +72,48 @@ class ParticipateInThreadsTest extends TestCase
                    ->assertStatus(403);
          }
 
-            /** @test */
-            public function unauthorized_users_can_delete_replies()
-            {
-                $this->signIn();
+        /** @test */
+        public function unauthorized_users_can_delete_replies()
+        {
+            $this->signIn();
 
-                $reply = Reply::factory()->create(['user_id' => auth()->id()]);
+            $reply = Reply::factory()->create(['user_id' => auth()->id()]);
 
-                $this->delete("/replies/{$reply->id}")->assertStatus(302);
+            $this->delete("/replies/{$reply->id}")->assertStatus(302);
 
-                $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+            $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
 
-            }
-}
+        }
+
+        /** @test */
+        public function unauthorized_users_cannot_update_replies()
+        {
+
+            $this->withExceptionHandling();
+
+            $reply = Reply::factory()->create();
+
+            $this->patch("/replies/{$reply->id}")
+                  ->assertRedirect('login');
+
+            $this->signIn()
+                  ->patch("/replies/{$reply->id}")
+                  ->assertStatus(403);
+        }
+
+        /** @test */
+        public function unauthorized_users_can_update_replies()
+        {
+            $this->signIn();
+
+            $reply = Reply::factory()->create(['user_id' => auth()->id()]);
+
+            $updatedReply = 'You been changed';
+
+            $this->patch("/replies/{$reply->id}", ['body' => $updatedReply]);
+
+            $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $updatedReply]);
+
+        }
+    }
+

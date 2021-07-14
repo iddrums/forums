@@ -28,6 +28,7 @@ Route::delete('/threads/{channel}/{thread}', [App\Http\Controllers\ThreadsContro
 Route::post('/threads', [App\Http\Controllers\ThreadsController::class, 'store'])->name('store');
 Route::get('/threads/{channel}', [App\Http\Controllers\ThreadsController::class, 'index'])->name('threads');
 Route::post('/threads/{channel}/{thread}/replies', [App\Http\Controllers\RepliesController::class, 'store'])->name('store');
+Route::patch('/replies/{reply}', [App\Http\Controllers\RepliesController::class, 'update']);
 Route::delete('/replies/{reply}', [App\Http\Controllers\RepliesController::class, 'destroy']);
 Route::post('/replies/{reply}/favorites', [App\Http\Controllers\FavoritesController::class, 'store'])->name('store');
 
