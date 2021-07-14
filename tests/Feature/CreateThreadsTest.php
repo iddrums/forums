@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\Channel;
+use App\Models\Activity;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -107,7 +108,7 @@ class CreateThreadsTest extends TestCase
         $this->assertDatabaseMissing('threads', $thread->toArray());
         $this->assertDatabaseMissing('replies', $reply->toArray());
 
-
+        $this->assertEquals(2, Activity::count());
     }
 
 
