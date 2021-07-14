@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reply;
 use App\Models\Thread;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,6 @@ class RepliesController extends Controller
     {
         $this->middleware('auth');
     }
-
 
     public function store($channelId, Thread $thread)
     {
@@ -23,5 +23,15 @@ class RepliesController extends Controller
             ]);
 
             return back()->with('flash', 'Your reply has been left.');
+    }
+
+    public function destroy(Reply $reply)
+    {
+
+        $this->authorize('update', $reply);
+
+        $reply->delete();
+
+        return back();
     }
 }
