@@ -30,7 +30,10 @@ Route::get('/threads/{channel}', [App\Http\Controllers\ThreadsController::class,
 Route::post('/threads/{channel}/{thread}/replies', [App\Http\Controllers\RepliesController::class, 'store'])->name('store');
 Route::patch('/replies/{reply}', [App\Http\Controllers\RepliesController::class, 'update']);
 Route::delete('/replies/{reply}', [App\Http\Controllers\RepliesController::class, 'destroy']);
-Route::post('/replies/{reply}/favorites', [App\Http\Controllers\FavoritesController::class, 'store'])->name('store');
+
+
+Route::post('/replies/{reply}/favorites', [App\Http\Controllers\FavoritesController::class, 'store']);
+Route::delete('/replies/{reply}/favorites', [App\Http\Controllers\FavoritesController::class, 'store']);
 
 
 Route::get('/profiles/{user}', [App\Http\Controllers\ProfilesController::class, 'show'])->name('profiles.user');
