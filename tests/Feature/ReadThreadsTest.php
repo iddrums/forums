@@ -108,4 +108,18 @@ class ReadThreadsTest extends TestCase
         $this->assertEquals([3, 2, 1, 0], array_column($response, 'replies_count'));
 
     }
+
+        /** @test */
+        public function a_user_can_request_all_replies_for_a_given_thread()
+        {
+            $thread = Thread::factory()->create();
+
+            Reply::factory()->hasThread(['thread_id' => $thread->id])->count(2)->create();
+    
+            $response  = $this->getJson($thread->path() . '/replies')->json();
+         
+            $this->assertCount(0, $response['data']);
+            $this->assertEquals(0, $response['total']);
+
+        }
     }
