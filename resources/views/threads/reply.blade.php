@@ -1,6 +1,6 @@
 <reply :attributes="{{ $reply }}" inline-template v-cloak>
     {{-- <div class="col-md-8"> --}}
-        <div id="reply-{{ $reply->id }}" class="card">
+        <div id="reply-{{ $reply->id }}" class="card card-default">
             <div class="card-header">
                 <div class="level">
                     <h5 class="flex">
@@ -8,12 +8,16 @@
                         {{ $reply->owner->name }}
                     </a> said {{ $reply->created_at->diffForHumans() }}...
                     </h5>
-                <div>
 
-                    <favorite :reply="{{ $reply }}"></favorite>
-                  </div>
+                 @if (Auth::check())
+                    <div>
+                        <favorite :reply="{{ $reply }}"></favorite>
+                    </div>
+                 @endif
                </div>
             </div>
+
+
             <div class="card-body">
                 <div v-if="editing">
                     <div class="form-group">
