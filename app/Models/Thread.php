@@ -17,7 +17,7 @@ class Thread extends Model
 
     protected $with = ['creator', 'channel'];
 
-
+    protected $appends = ['isSubscribedTo'];
 
     protected static function boot()
     {
@@ -58,9 +58,6 @@ class Thread extends Model
     {
        return $this->replies()->create($reply);
 
-    //    $this->increment('replies_count');
-
-    //    return $reply;
     }
 
     public function scopeFilter($query, $filters)
@@ -73,7 +70,7 @@ class Thread extends Model
     {
        $this->subscriptions()->create(['user_id' => $userId ?: auth()->id()]);
     }
-    
+
     public function unsubscribe($userId = null)
     {
         $this->subscriptions()->where('user_id', $userId ?: auth()->id())->delete();
@@ -82,6 +79,13 @@ class Thread extends Model
     public function subscriptions()
     {
      return  $this->hasMany(ThreadSubscription::class);
+    }
+
+    public function getIsSubscribedToAttribute()
+    {
+     return  $this->subscriptions()
+                  ->where('user_id', auth()->id())
+                  ->exists();
     }
 
 }

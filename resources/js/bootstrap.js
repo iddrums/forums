@@ -1,3 +1,4 @@
+window.Vue = require('vue');
 window._ = require('lodash');
 
 /**
@@ -21,11 +22,13 @@ try {
 
 window.axios = require('axios');
 
-window.axios.defaults.headers.common = {
-    'X-CSRF-TOKEN': window.App.csrfToken,
-     'X-Requested-With':  'XMLHttpRequest'
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-};
+// window.axios.defaults.headers.common = {
+//     'X-CSRF-TOKEN': window.App.csrfToken,
+//      'X-Requested-With':  'XMLHttpRequest'
+
+// };
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -44,9 +47,17 @@ window.axios.defaults.headers.common = {
 //     forceTLS: true
 // });
 
+let token = document.head.querySelector('meta[name="csrf-token"]');
+
+if (token) {
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
+
+
 window.events = new Vue();
 
-window.Vue = require('vue');
 
 Vue.prototype.authorize = function (handler) {
 

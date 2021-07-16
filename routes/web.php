@@ -31,7 +31,10 @@ Route::get('/threads/{channel}/{thread}/replies', [App\Http\Controllers\RepliesC
 Route::post('/threads/{channel}/{thread}/replies', [App\Http\Controllers\RepliesController::class, 'store'])->name('store');
 Route::patch('/replies/{reply}', [App\Http\Controllers\RepliesController::class, 'update']);
 Route::delete('/replies/{reply}', [App\Http\Controllers\RepliesController::class, 'destroy']);
+
+
 Route::post('/threads/{channel}/{thread}/subscriptions', [App\Http\Controllers\ThreadSubscriptionsController::class, 'store'])->middleware('auth');
+Route::delete('/threads/{channel}/{thread}/subscriptions', [App\Http\Controllers\ThreadSubscriptionsController::class, 'destroy'])->middleware('auth');
 
 
 

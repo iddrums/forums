@@ -30,16 +30,20 @@
 
             <replies @added="repliesCount++" @removed="repliesCount--"></replies>
 
-
-
-
         </div>
         <div class="col-md-4">
                <div class="card">
                     <div class="card-body">
                         <p>This thread was published {{ $thread->created_at->diffForHumans() }} by
                             <a href="#">{{ $thread->creator->name }}</a>, and currently
-                            has <span v-text="repliesCount"></span> {{ Str::plural('comment', $thread->replies_count) }} comments.
+                            has <span v-text="repliesCount"></span> {{ Str::plural('comment', $thread->replies_count) }}.
+                        </p>
+
+                        <p>
+                            <subscribe-button :active="{{ json_encode($thread->isSubscribedTo) }}"></subscribe-button>
+                            {{-- <button class="btn btn-primary">
+                                Subscribe
+                            </button> --}}
                         </p>
                    </div>
                </div>
