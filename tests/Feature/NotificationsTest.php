@@ -5,29 +5,41 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Thread;
+use Notification;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Notifications\DatabaseNotification;
 
 class NotificationsTest extends TestCase
 {
     use DatabaseMigrations;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
-    {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
+
+    // /**
+    //  * A basic feature test example.
+    //  *
+    //  * @return void
+    //  */
+    // public function test_example()
+    // {
+    //     $response = $this->get('/');
+
+    //     $response->assertStatus(200);
+
+    // }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->signIn();
+
     }
 
     /** @test */
     public function a_notification_is_prepared_when_a_subscribed_thread_receives_a_new_reply_that_is_not_by_the_current_user()
     {
-        $this->signIn();
 
         $thread = Thread::factory()->create()->subscribe();
 
@@ -52,7 +64,7 @@ class NotificationsTest extends TestCase
       /** @test */
       public function a_user_can_fetch_their_unread_notifications()
       {
-          $this->signIn();
+        //  DatabaseNotification::factory()->create();
 
           $thread = Thread::factory()->create()->subscribe();
 
@@ -72,7 +84,6 @@ class NotificationsTest extends TestCase
     /** @test */
     public function a_user_can_mark_a_notification_as_read()
     {
-        $this->signIn();
 
         $thread = Thread::factory()->create()->subscribe();
 
