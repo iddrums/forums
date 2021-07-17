@@ -5,7 +5,7 @@
                         <span class="glyphicon glyphicon-bell"></span>
                     </a>
             </li>
-                <li v-for="notification in notifications">
+                <li v-for="notification in notifications" :key="notification">
                     <a :href="notification.data.link"
                         v-text="notification.data.message"
                         @click="markAsRead(notification)"></a>

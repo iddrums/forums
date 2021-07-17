@@ -60522,7 +60522,7 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm._l(_vm.notifications, function(notification) {
-        return _c("li", [
+        return _c("li", { key: notification }, [
           _c("a", {
             attrs: { href: notification.data.link },
             domProps: { textContent: _vm._s(notification.data.message) },

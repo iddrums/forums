@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\RecordsActivity;
+use App\Events\ThreadHasNewReply;
 use App\Notifications\ThreadWasUpdated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -52,23 +53,29 @@ class Thread extends Model
     public function channel()
 
     {
-        return $this->belongsTo(Channel::class);
+         return $this->belongsTo(Channel::class);
     }
 
     public function addReply($reply)
     {
        $reply = $this->replies()->create($reply);
 
+       $this->notifySubscribers($reply);
 
-       $this->subscriptions
-            ->filter(function($sub) use ($reply) {
-            return $sub->user_id != $reply->user_id;
-           })
+    //    event(new ThreadHasNewReply($this, $reply));
 
-             ->each->notify($reply);
 
        return $reply;
 
+    }
+
+    public function notifySubscribers($reply)
+
+    {
+        $this->subscriptions
+        ->where('user_id',  '!=',  $reply->user_id)
+         ->each
+         ->notify($reply);
     }
 
     public function scopeFilter($query, $filters)
