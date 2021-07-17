@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Thread;
 use App\Models\Channel;
@@ -75,6 +76,11 @@ class ThreadsController extends Controller
      */
     public function show($channel, Thread $thread)
     {
+        if (auth()->check()) {
+
+            auth()->user()->read($thread);
+        }
+
         return view ('threads.show', compact('thread'));
     }
 
