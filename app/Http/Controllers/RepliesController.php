@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Inspections\Spam;
 use App\Models\Reply;
 use App\Models\Thread;
 
@@ -21,7 +20,8 @@ class RepliesController extends Controller
     public function store($channelId, Thread $thread)
     {
         try {
-            $this->validateReply();
+            // request()->validate(['body' => 'required|spamfree'])
+            $this->validate(request(), ['body' => 'required|spamfree']);
 
                 $reply = $thread->addReply([
                     'body' => request('body'),
@@ -44,15 +44,15 @@ class RepliesController extends Controller
 
        try {
 
-       $this->validateReply();
+            $this->validate(request(), ['body' => 'required|spamfree']);
 
-       $reply->update(request(['body']));
+            $reply->update(request(['body']));
 
-       } catch (\Exception $e) {
-           return response(
-            'Sorry your reply could not be saved at this time', 422
-           );
-       }
+            } catch (\Exception $e) {
+                return response(
+                    'Sorry your reply could not be saved at this time', 422
+                );
+            }
     }
 
 
@@ -67,12 +67,5 @@ class RepliesController extends Controller
             return response(['status' => 'Reply deleted']);
         }
         return back();
-    }
-
-    protected function validateReply()
-    {
-        $this->validate(request(), ['body' => 'required']);
-
-        resolve(Spam::class)->detect(request('body'));
     }
 }
