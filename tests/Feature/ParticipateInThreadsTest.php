@@ -74,6 +74,9 @@ class ParticipateInThreadsTest extends TestCase
         /** @test */
         public function unauthorized_users_can_delete_replies()
         {
+
+            $this->withExceptionHandling();
+
             $this->signIn();
 
             $reply = Reply::factory()->create(['user_id' => auth()->id()]);
@@ -103,7 +106,7 @@ class ParticipateInThreadsTest extends TestCase
         }
 
         /** @test */
-        public function unauthorized_users_can_update_replies()
+        public function authorized_users_can_update_replies()
         {
             $this->signIn();
 
@@ -128,10 +131,29 @@ class ParticipateInThreadsTest extends TestCase
                 'body' => 'Yahoo Customer Support'
             ]);
 
-            $this->expectException(\Exception::class);
-
-            $this->post($thread->path() .'/replies', $reply->toArray());
+            $this->post($thread->path() .'/replies', $reply->toArray())
+                 ->assertStatus(422);
 
        }
+
+          /** @test */
+          public function users_may_only_reply_a_maximum_of_once_per_minute()
+          {
+               $this->signIn();
+
+               $thread = Thread::factory()->create();
+
+               $reply = Reply::factory()->make([
+                   'body' => 'My simple reply'
+               ]);
+
+            //    $this->post($thread->path() .'/replies', $reply->toArray())
+            //         ->assertStatus(200);
+
+                $this->post($thread->path() .'/replies', $reply->toArray())
+                    ->assertStatus(422);
+
+          }
     }
+
 

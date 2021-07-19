@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Reply;
 use App\Models\Thread;
+use App\Inspections\Spam;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class RepliesController extends Controller
 {
@@ -19,43 +22,50 @@ class RepliesController extends Controller
 
     public function store($channelId, Thread $thread)
     {
-        try {
-            // request()->validate(['body' => 'required|spamfree'])
-            $this->validate(request(), ['body' => 'required|spamfree']);
+        if (Gate::denies('create', new Reply)) {
+            return response(
+                'Sorry, your reply could not be saved at this time', 422
 
-                $reply = $thread->addReply([
-                    'body' => request('body'),
-                    'user_id' => auth()->id()
-                    ]);
-
-                } catch (\Exception $e) {
-                    return response(
-                        'Sorry your reply could not be saved at this time', 422
             );
         }
-               return $reply->load('owner');
+
+        try {
+            $this->validate(request(), ['body' => 'required|spamfree']);
+
+            $reply = $thread->addReply([
+                'body' => request('body'),
+                'user_id' => auth()->id()
+                ]);
+
+           } catch (\Exception $e) {
+               return response(
+                     'Sorry, your reply could not be saved at this time', 422
+                );
+        }
+              return $reply->load('owner');
 
     }
 
 
     public function update(Reply $reply)
     {
-       $this->authorize('update', $reply);
+        $this->authorize('update', $reply);
 
-       try {
+        try {
+            $this->validateReply();
 
-            $this->validate(request(), ['body' => 'required|spamfree']);
-
-            $reply->update(request(['body']));
+                $reply->update(request(['body']));
 
             } catch (\Exception $e) {
+
                 return response(
-                    'Sorry your reply could not be saved at this time', 422
+                'Sorry, Your reply could not be saved at this time', 422
+
                 );
-            }
+
+       }
+
     }
-
-
 
     public function destroy(Reply $reply)
     {
@@ -67,5 +77,12 @@ class RepliesController extends Controller
             return response(['status' => 'Reply deleted']);
         }
         return back();
+    }
+
+    protected function validateReply()
+    {
+        $this->validate(request(), ['body' => 'required']);
+
+        resolve(Spam::class)->detect(request('body'));
     }
 }
