@@ -1904,11 +1904,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['message'],
   data: function data() {
     return {
       body: '',
+      level: 'success',
       show: false
     };
   },
@@ -1919,13 +1923,14 @@ __webpack_require__.r(__webpack_exports__);
       this.flash(this.message);
     }
 
-    window.events.$on('flash', function (message) {
-      return _this.flash(message);
+    window.events.$on('flash', function (data) {
+      return _this.flash(data);
     });
   },
   methods: {
-    flash: function flash(message) {
-      this.body = message;
+    flash: function flash(data) {
+      this.body = data.message;
+      this.level = data.level;
       this.show = true;
       this.hide();
     },
@@ -1993,6 +1998,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post(location.pathname + '/replies', {
         body: this.body
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
       }).then(function (_ref) {
         var data = _ref.data;
         _this.body = '';
@@ -2221,6 +2228,8 @@ __webpack_require__.r(__webpack_exports__);
     update: function update() {
       axios.patch('/replies/' + this.data.id, {
         body: this.body
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
       });
       this.editing = false;
       flash('Updated!');
@@ -2370,9 +2379,9 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('flash', __webpack_require__(/*! ./components/Flash.vue */ "./resources/js/components/Flash.vue"));
-Vue.component('thread-view', __webpack_require__(/*! ./pages/Thread.vue */ "./resources/js/pages/Thread.vue"));
 Vue.component('paginator', __webpack_require__(/*! ./components/Paginator.vue */ "./resources/js/components/Paginator.vue"));
 Vue.component('user-notifications', __webpack_require__(/*! ./components/UserNotifications.vue */ "./resources/js/components/UserNotifications.vue"));
+Vue.component('thread-view', __webpack_require__(/*! ./pages/Thread.vue */ "./resources/js/pages/Thread.vue"));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -2448,7 +2457,11 @@ Vue.prototype.authorize = function (handler) {
 };
 
 window.flash = function (message) {
-  window.events.$emit('flash', message);
+  var level = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'success';
+  window.events.$emit('flash', {
+    message: message,
+    level: level
+  });
 };
 
 /***/ }),
@@ -60103,17 +60116,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      directives: [
-        { name: "show", rawName: "v-show", value: _vm.show, expression: "show" }
-      ],
-      staticClass: "alert alert-success alert-flash",
-      attrs: { role: "alert" }
-    },
-    [_c("strong", [_vm._v("Success!")]), _vm._v(" " + _vm._s(_vm.body) + "\n")]
-  )
+  return _c("div", {
+    directives: [
+      { name: "show", rawName: "v-show", value: _vm.show, expression: "show" }
+    ],
+    staticClass: "alert alert-flash",
+    class: "alert-" + _vm.level,
+    attrs: { role: "alert" },
+    domProps: { textContent: _vm._s(_vm.body) }
+  })
 }
 var staticRenderFns = []
 render._withStripped = true
