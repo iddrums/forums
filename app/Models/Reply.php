@@ -57,11 +57,20 @@ class Reply extends Model
 
     }
 
-
     public function path()
     {
        return $this->thread->path() . "#reply-{#this->id}";
     }
+
+
+    public function setBodyAttributes($body)
+    {
+       $this->attributes['body'] = preg_replace('/@([\w\-]+)/', '<a href="/profiles/$1">$0</a>', $body);
+    }
+
+
+
+
 
     public function favorites()
     {
