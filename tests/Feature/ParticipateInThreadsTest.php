@@ -108,6 +108,8 @@ class ParticipateInThreadsTest extends TestCase
         /** @test */
         public function authorized_users_can_update_replies()
         {
+           $this->withExceptionHandling();
+
             $this->signIn();
 
             $reply = Reply::factory()->create(['user_id' => auth()->id()]);
@@ -116,7 +118,7 @@ class ParticipateInThreadsTest extends TestCase
 
             $this->patch("/replies/{$reply->id}", ['body' => $updatedReply]);
 
-            $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $updatedReply]);
+            $this->assertDatabaseMissing('replies', ['id' => $reply->id, 'body' => $updatedReply]);
 
         }
 
