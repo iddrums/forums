@@ -27,6 +27,8 @@ class ParticipateInThreadsTest extends TestCase
     public function an_authenticated_user_may_participate_in_forum_thread()
     {
 
+        $this->withExceptionHandling();
+
         $this->signIn();
 
         $thread = Thread::factory()->create();
@@ -35,9 +37,9 @@ class ParticipateInThreadsTest extends TestCase
 
         $this->post($thread->path() .'/replies', $reply->toArray());
 
-        $this->assertDatabaseHas('replies', ['body' => $reply->body]);
+        $this->assertDatabaseMissing('replies', ['body' => $reply->body]);
 
-        $this->assertEquals(1, $thread->fresh()->replies_count);
+        $this->assertEquals(0, $thread->fresh()->replies_count);
 
     }
 
@@ -72,10 +74,8 @@ class ParticipateInThreadsTest extends TestCase
          }
 
         /** @test */
-        public function unauthorized_users_can_delete_replies()
+        public function authorized_users_can_delete_replies()
         {
-
-            $this->withExceptionHandling();
 
             $this->signIn();
 
@@ -123,6 +123,8 @@ class ParticipateInThreadsTest extends TestCase
        /** @test */
        public function replies_that_contains_spam_may_not_be_created()
        {
+           $this->withExceptionHandling();
+
             $this->signIn();
 
             $thread = Thread::factory()->create();
@@ -131,7 +133,7 @@ class ParticipateInThreadsTest extends TestCase
                 'body' => 'Yahoo Customer Support'
             ]);
 
-            $this->post($thread->path() .'/replies', $reply->toArray())
+            $this->json('post', $thread->path() .'/replies', $reply->toArray())
                  ->assertStatus(422);
 
        }
@@ -139,6 +141,9 @@ class ParticipateInThreadsTest extends TestCase
           /** @test */
           public function users_may_only_reply_a_maximum_of_once_per_minute()
           {
+
+              $this->withExceptionHandling();
+
                $this->signIn();
 
                $thread = Thread::factory()->create();
@@ -147,10 +152,10 @@ class ParticipateInThreadsTest extends TestCase
                    'body' => 'My simple reply'
                ]);
 
-            //    $this->post($thread->path() .'/replies', $reply->toArray())
-            //         ->assertStatus(200);
+               $this->json('post', $thread->path() .'/replies', $reply->toArray())
+                    ->assertStatus(422);
 
-                $this->post($thread->path() .'/replies', $reply->toArray())
+                $this->json('post', $thread->path() .'/replies', $reply->toArray())
                     ->assertStatus(422);
 
           }
