@@ -12,31 +12,36 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
-    <script>
-        window.App = {!!  json_encode ([
-         'csrfToken' => csrf_token(),
-         'user' => Auth::user(),
-         'signedIn' => Auth::check()
-        ]) !!}
-        }
-    </script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <style>
-        body { padding-bottom: 100px; }
-        .level { display: flex; align-items: center; }
-        .flex { flex: 1; }
-        .mr-1 { margin-right: 1em: }
-        [v-cloak] { display: none;}
-    </style>
+
+    <script>
+        window.App = {!!  json_encode ([
+            'csrfToken' => csrf_token(),
+            'user' => Auth::user(),
+            'signedIn' => Auth::check()
+        ]) !!};
+        </script>
+
+<style>
+    body { padding-bottom: 100px; }
+    .level { display: flex; align-items: center; }
+    .flex { flex: 1; }
+    .mr-1 { margin-right: 1em: }
+    [v-cloak] { display: none;}
+</style>
+
+    @yield('header')
+
 </head>
 <body>
     <div id="app">
+
         @include('layouts.nav')
 
         <main class="py-4">
@@ -44,6 +49,8 @@
 
             <flash message="{{ session('flash') }}"></flash>
         </main>
+
+        @yield('scripts')
     </div>
 </body>
 </html>

@@ -46,3 +46,6 @@ Route::get('/profiles/{user}', [App\Http\Controllers\ProfilesController::class, 
 Route::get('/profiles/{user}/notifications', [App\Http\Controllers\UserNotificationsController::class, 'index']);
 Route::delete('/profiles/{user}/notifications/{notification}', [App\Http\Controllers\UserNotificationsController::class, 'destroy']);
 
+Route::get('api/users', [App\Http\Controllers\Api\UsersController::class, 'index']);
+
+
