@@ -5,21 +5,8 @@
     <div class="row">
        <div class="col-md-8 col-md-offset-2">
         <div class="page-header">
-            <h1>
-                {{ $profileUser->name }}
-            </h1>
 
-            @can ('update', $profileUser)
-                 <form method="POST" action="{{ route('avatar',  $profileUser) }}" enctype="multipart/form-data">
-                     {{ csrf_field() }}
-
-                    <input type="file" name="avatar">
-
-                     <button type="submit" class="btn btn-primary">Add Avatar</button>
-                 </form>
-            @endcan
-
-            <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZG9nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" width="70" height="70">
+            <avatar-form :user="{{ $profileUser }}"></avatar-form>
         </div>
 
             @forelse ($activities as $date => $activity)
