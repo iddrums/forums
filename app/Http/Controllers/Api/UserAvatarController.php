@@ -20,4 +20,5 @@ class UserAvatarController extends Controller
 
       return back();
     }
+
 }
