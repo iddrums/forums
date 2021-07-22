@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Visits;
 use App\RecordsVisits;
 use App\RecordsActivity;
 use App\Events\ThreadReceivedNewReply;
@@ -14,7 +15,7 @@ class Thread extends Model
 {
     use HasFactory;
 
-    use RecordsActivity, RecordsVisits;
+    use RecordsActivity;
 
     protected $guarded = [];
 
@@ -106,5 +107,11 @@ class Thread extends Model
 
          return  $this->updated_at > cache($key);
     }
+
+    public function visits()
+    {
+       return new Visits($this);
+    }
+
 
 }
