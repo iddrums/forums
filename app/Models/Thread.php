@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Spam;
+use App\RecordsVisits;
 use App\RecordsActivity;
-use App\Events\ThreadHasNewReply;
 use App\Events\ThreadReceivedNewReply;
 use App\Notifications\ThreadWasUpdated;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +14,7 @@ class Thread extends Model
 {
     use HasFactory;
 
-    use RecordsActivity;
+    use RecordsActivity, RecordsVisits;
 
     protected $guarded = [];
 
