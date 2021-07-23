@@ -95,5 +95,10 @@ class Reply extends Model
     {
         return $this->favorites->count();
     }
+
+    public function isBest()
+    {
+       return $this->thread->best_reply_id == $this->id;
+    }
 }
 

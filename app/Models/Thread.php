@@ -131,4 +131,10 @@ class Thread extends Model
         return $newCount > 0 ? "$slug-$newCount" : $slug;
     }
 
+    public function markBestReply(Reply $reply)
+    {
+        $reply->thread->update(['best_reply_id' => $reply->id]);
+
+    }
+
 }
