@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Visits;
 use App\RecordsVisits;
 use App\RecordsActivity;
+use Illuminate\Support\Str;
 use App\Events\ThreadReceivedNewReply;
 use App\Notifications\ThreadWasUpdated;
 use Illuminate\Database\Eloquent\Model;
@@ -111,6 +112,19 @@ class Thread extends Model
     public function getRouteKeyName()
     {
          return 'slug';
+    }
+
+    public function setSlugAttribute($title)
+    {
+        $this->attributes['slug'] = $this->incrementSlug($title);
+    }
+
+    private function incrementSlug($title)
+    {
+        $slug = Str::slug($title, '-');
+        $count = Thread::where('slug', 'LIKE', "{$slug}%")->count();
+        $newCount = $count > 0 ? ++$count : '';
+        return $newCount > 0 ? "$slug-$newCount" : $slug;
     }
 
 }
