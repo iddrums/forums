@@ -1,4 +1,7 @@
 window._ = require('lodash');
+window.Vue = require('vue').default;
+
+window.events = new Vue();
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -54,10 +57,6 @@ let token = document.head.querySelector('meta[name="csrf-token"]');
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-
-window.Vue = require('vue');
-
-window.events = new Vue();
 
 
 Vue.prototype.authorize = function (handler) {

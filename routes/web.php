@@ -41,7 +41,7 @@ Route::delete('/threads/{channel}/{thread}/subscriptions', [App\Http\Controllers
 Route::post('/replies/{reply}/favorites', [App\Http\Controllers\FavoritesController::class, 'store']);
 Route::delete('/replies/{reply}/favorites', [App\Http\Controllers\FavoritesController::class, 'store']);
 
-Route::get('/register/confirm', [App\Http\Controllers\Api\RegisterConfirmationController::class, 'index']);
+Route::get('/register/confirm', [App\Http\Controllers\Api\RegisterConfirmationController::class, 'index'])->name('register.confirm');
 
 
 Route::get('/profiles/{user}', [App\Http\Controllers\ProfilesController::class, 'show'])->name('profiles.user');
