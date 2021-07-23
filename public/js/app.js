@@ -3651,6 +3651,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  // name: 'user-notifications',
+  // components: {
+  //   user-notifications
+  // },
   data: function data() {
     return {
       notifications: false
@@ -3707,8 +3711,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_Flash_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Flash.vue */ "./resources/js/components/Flash.vue");
+/* harmony import */ var _components_Paginator_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Paginator.vue */ "./resources/js/components/Paginator.vue");
+/* harmony import */ var _components_UserNotifications_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/UserNotifications.vue */ "./resources/js/components/UserNotifications.vue");
+/* harmony import */ var _pages_Thread_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/Thread.vue */ "./resources/js/pages/Thread.vue");
+/* harmony import */ var _components_AvatarForm_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/AvatarForm.vue */ "./resources/js/components/AvatarForm.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -3726,12 +3737,22 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"
  */
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+// Vue.component('flash', require('./components/Flash.vue'));
 
-Vue.component('flash', __webpack_require__(/*! ./components/Flash.vue */ "./resources/js/components/Flash.vue"));
-Vue.component('paginator', __webpack_require__(/*! ./components/Paginator.vue */ "./resources/js/components/Paginator.vue"));
-Vue.component('user-notifications', __webpack_require__(/*! ./components/UserNotifications.vue */ "./resources/js/components/UserNotifications.vue"));
-Vue.component('thread-view', __webpack_require__(/*! ./pages/Thread.vue */ "./resources/js/pages/Thread.vue"));
-Vue.component('avatar-form', __webpack_require__(/*! ./components/AvatarForm.vue */ "./resources/js/components/AvatarForm.vue"));
+
+Vue.component('flash', _components_Flash_vue__WEBPACK_IMPORTED_MODULE_0__.default); // Vue.component('paginator', require('./components/Paginator.vue'));
+
+
+Vue.component('paginator', _components_Paginator_vue__WEBPACK_IMPORTED_MODULE_1__.default); // Vue.component('user-notifications', require('./components/UserNotifications.vue'));
+
+
+Vue.component('user-notifications', _components_UserNotifications_vue__WEBPACK_IMPORTED_MODULE_2__.default); // Vue.component('thread-view', require('./pages/Thread.vue'));
+
+
+Vue.component('thread-view', _pages_Thread_vue__WEBPACK_IMPORTED_MODULE_3__.default); // Vue.component('avatar-form', require('./components/AvatarForm.vue'));
+
+
+Vue.component('avatar-form', _components_AvatarForm_vue__WEBPACK_IMPORTED_MODULE_4__.default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

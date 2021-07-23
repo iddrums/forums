@@ -15,6 +15,11 @@
 
 <script>
 export default {
+    // name: 'user-notifications',
+
+    // components: {
+    //   user-notifications
+    // },
     data() {
         return { notifications: false }
     },

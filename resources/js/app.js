@@ -19,15 +19,30 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('flash', require('./components/Flash.vue'));
+// Vue.component('flash', require('./components/Flash.vue'));
 
-Vue.component('paginator', require('./components/Paginator.vue'));
+import Flash from './components/Flash.vue';
+Vue.component('flash', Flash);
 
-Vue.component('user-notifications', require('./components/UserNotifications.vue'));
+// Vue.component('paginator', require('./components/Paginator.vue'));
 
-Vue.component('thread-view', require('./pages/Thread.vue'));
+import Paginator from './components/Paginator.vue';
+Vue.component('paginator', Paginator);
 
-Vue.component('avatar-form', require('./components/AvatarForm.vue'));
+// Vue.component('user-notifications', require('./components/UserNotifications.vue'));
+
+import UserNotifications from './components/UserNotifications.vue';
+Vue.component('user-notifications', UserNotifications);
+
+// Vue.component('thread-view', require('./pages/Thread.vue'));
+
+import Thread from './pages/Thread.vue';
+Vue.component('thread-view', Thread);
+
+// Vue.component('avatar-form', require('./components/AvatarForm.vue'));
+
+import AvatarForm from './components/AvatarForm.vue';
+Vue.component('avatar-form', AvatarForm);
 
 
 
