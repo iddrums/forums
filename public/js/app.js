@@ -3544,6 +3544,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3555,7 +3559,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       editing: false,
       id: this.data.id,
-      body: this.data.body
+      body: this.data.body,
+      isBest: false
     };
   },
   computed: {
@@ -3586,6 +3591,9 @@ __webpack_require__.r(__webpack_exports__);
     destroy: function destroy() {
       axios["delete"]('/replies/' + this.data.id);
       this.$emit('deleted', this.data.id);
+    },
+    markBestReply: function markBestReply() {
+      this.isBest = true;
     }
   }
 });
@@ -62407,7 +62415,11 @@ var render = function() {
   return _c("div", { staticClass: "col-md-8" }, [
     _c(
       "div",
-      { staticClass: "card card-default", attrs: { id: "'reply-'+id" } },
+      {
+        staticClass: "card",
+        class: _vm.isBest ? "card-success" : "card-default",
+        attrs: { id: "'reply-'+id" }
+      },
       [
         _c("div", { staticClass: "card-header" }, [
           _c("div", { staticClass: "level" }, [
@@ -62476,31 +62488,50 @@ var render = function() {
             : _c("div", { domProps: { innerHTML: _vm._s(_vm.body) } })
         ]),
         _vm._v(" "),
-        _vm.canUpdate
-          ? _c("div", { staticClass: "card-footer level" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-xs mr-1",
-                  on: {
-                    click: function($event) {
-                      _vm.editing = true
+        _c("div", { staticClass: "card-footer level" }, [
+          _vm.canUpdate
+            ? _c("div", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-xs mr-1",
+                    on: {
+                      click: function($event) {
+                        _vm.editing = true
+                      }
                     }
-                  }
-                },
-                [_vm._v("Edit")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
+                  },
+                  [_vm._v("Edit")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-xs btn-danger mr-1",
+                    on: { click: _vm.destroy }
+                  },
+                  [_vm._v("Delete")]
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              directives: [
                 {
-                  staticClass: "btn btn-xs btn-danger mr-1",
-                  on: { click: _vm.destroy }
-                },
-                [_vm._v("Delete")]
-              )
-            ])
-          : _vm._e()
+                  name: "show",
+                  rawName: "v-show",
+                  value: !_vm.isBest,
+                  expression: "! isBest"
+                }
+              ],
+              staticClass: "btn btn-xs btn-success ml-a",
+              on: { click: _vm.markBestReply }
+            },
+            [_vm._v("Best Reply?")]
+          )
+        ])
       ]
     )
   ])
