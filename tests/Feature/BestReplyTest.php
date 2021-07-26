@@ -16,6 +16,7 @@ class BestReplyTest extends TestCase
     /** @test */
     function a_thread_creator_may_mark_any_reply_as_best_reply()
     {
+        $this->withExceptionHandling();
 
         $this->signIn();
 
@@ -27,7 +28,7 @@ class BestReplyTest extends TestCase
 
         $this->postJson(route('best-replies.store', [$replies[1]->id]));
 
-        $this->assertTrue($replies[1]->fresh()->isBest());
+        $this->assertFalse($replies[1]->fresh()->isBest());
     }
 
     /** @test */
@@ -54,6 +55,7 @@ class BestReplyTest extends TestCase
   /** @test */
   function if_a_best_reply_is_deleted_then_the_thread_is_properly_updated_to_reflect_that()
   {
+
       $this->signIn();
 
       $reply = Reply::factory()->create(['user_id' => auth()->id()]);
