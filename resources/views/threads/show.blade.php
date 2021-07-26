@@ -9,7 +9,7 @@
 
 
 @section('content')
-<thread-view :data-replies-count="{{ $thread->replies_count }}" :data-locked="{{ $thread->locked }}" inline-template>
+<thread-view :thread="{{ $thread }}" inline-template>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -50,9 +50,15 @@
                         </p>
 
                         <p>
-                            <button type="button" class="btn btn-success" {{ json_encode($thread->isSubscribedTo) }} v-if="signedIn">Subscribe</button>
+                        //    <button type="button" class="btn btn-success" {{ json_encode($thread->isSubscribedTo) }} v-if="signedIn">Subscribe</button>
 
-                            <button type="button" class="btn btn-primary" v-if="authorize('isAdmin') && ! locked" @click="locked = true">Lock</button>
+                            <subscribe-button type="button" :active="{{ json_encode($thread->isSubscribedTo) }}"  v-if="signedIn"></subscribe-button>
+
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    v-if="authorize('isAdmin')"
+                                    @click="toggleLock"
+                                    v-text="locked ? 'Unlock' : 'Lock'">Lock</button>
                         </p>
                    </div>
                </div>
