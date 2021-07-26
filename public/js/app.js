@@ -3319,11 +3319,6 @@ __webpack_require__.r(__webpack_exports__);
       body: ''
     };
   },
-  computed: {
-    signedIn: function signedIn() {
-      return window.App.signedIn;
-    }
-  },
   mounted: function mounted() {
     $('#body').atwho({
       at: "@",
@@ -3560,23 +3555,14 @@ __webpack_require__.r(__webpack_exports__);
       editing: false,
       id: this.data.id,
       body: this.data.body,
-      isBest: false
+      isBest: false,
+      reply: this.data
     };
   },
   computed: {
     ago: function ago() {
       return moment__WEBPACK_IMPORTED_MODULE_1___default()(this.data.created_at).fromNow() + '...';
-    },
-    signedIn: function signedIn() {
-      return window.App.signedIn;
     }
-  },
-  canUpdate: function canUpdate() {
-    var _this = this;
-
-    return this.authorize(function (user) {
-      return _this.data.user_id == user.id;
-    });
   },
   methods: {
     update: function update() {
@@ -3773,6 +3759,21 @@ var app = new Vue({
 
 /***/ }),
 
+/***/ "./resources/js/authorizations.js":
+/*!****************************************!*\
+  !*** ./resources/js/authorizations.js ***!
+  \****************************************/
+/***/ ((module) => {
+
+var user = window.App.user;
+module.exports = {
+  updateReply: function updateReply(reply) {
+    return reply.user_id === user.id;
+  }
+};
+
+/***/ }),
+
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
@@ -3829,10 +3830,23 @@ if (token) {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-Vue.prototype.authorize = function (handler) {
-  var user = window.App.user;
-  return user ? handler(user) : false;
+var authorizations = __webpack_require__(/*! ./authorizations */ "./resources/js/authorizations.js");
+
+Vue.prototype.authorize = function () {
+  if (!window.App.signedIn) return false;
+
+  for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
+    params[_key] = arguments[_key];
+  }
+
+  if (typeof params[0] === 'string') {
+    return authorizations[params[0]](params[1]);
+  }
+
+  return params[0](window.App.user);
 };
+
+Vue.prototype.signedIn = window.App.signedIn;
 
 window.flash = function (message) {
   var level = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'success';
@@ -62489,7 +62503,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-footer level" }, [
-          _vm.canUpdate
+          _vm.authorize("updateReply", _vm.reply)
             ? _c("div", [
                 _c(
                   "button",
