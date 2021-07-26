@@ -9,7 +9,7 @@
 
 
 @section('content')
-<thread-view initial-replies-count="{{ $thread->replies_count }}" inline-template>
+<thread-view :data-replies-count="{{ $thread->replies_count }}" :data-locked="{{ $thread->locked }}" inline-template>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -46,14 +46,13 @@
                     <div class="card-body">
                         <p>This thread was published {{ $thread->created_at->diffForHumans() }} by
                             <a href="#">{{ $thread->creator->name }}</a>, and currently
-                            has <span v-text="repliesCount"></span> {{ Str::plural('comment', $thread->replies_count) }}.
+                            has <span v-text="repliesCount"></span> {{ Str::plural('comment', $thread->replies_count) }}
                         </p>
 
                         <p>
-                            <subscribe-button :active="{{ json_encode($thread->isSubscribedTo) }}"></subscribe-button>
-                            {{-- <button class="btn btn-primary">
-                                Subscribe
-                            </button> --}}
+                            <button type="button" class="btn btn-success" {{ json_encode($thread->isSubscribedTo) }} v-if="signedIn">Subscribe</button>
+
+                            <button type="button" class="btn btn-primary" v-if="authorize('isAdmin') && ! locked" @click="locked = true">Lock</button>
                         </p>
                    </div>
                </div>
