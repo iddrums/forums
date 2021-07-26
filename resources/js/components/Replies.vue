@@ -29,7 +29,7 @@ export default {
 
     created() {
        this.fetch();
-    }, 
+    },
 
     methods: {
         fectch(page) {
@@ -39,7 +39,7 @@ export default {
         url(page){
             if (! page){
                 let query = location.search.match(/page=(\d+)/);
-               
+
                page = query ? query[1] : 1;
             }
          return location.pathname + '/replies?pages=${page}';
