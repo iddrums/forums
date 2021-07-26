@@ -30,7 +30,7 @@ Route::get('/threads/{channel}', [App\Http\Controllers\ThreadsController::class,
 Route::get('/threads/{channel}/{thread}/replies', [App\Http\Controllers\RepliesController::class, 'index']);
 Route::post('/threads/{channel}/{thread}/replies', [App\Http\Controllers\RepliesController::class, 'store'])->name('store');
 Route::patch('/replies/{reply}', [App\Http\Controllers\RepliesController::class, 'update']);
-Route::delete('/replies/{reply}', [App\Http\Controllers\RepliesController::class, 'destroy']);
+Route::delete('/replies/{reply}', [App\Http\Controllers\RepliesController::class, 'destroy'])->name('replies.destroy');
 
 Route::post('/replies/{reply}/best', [App\Http\Controllers\BestRepliesController::class, 'store'])->name('best-replies.store');
 

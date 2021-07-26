@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Reply;
 use App\Models\Thread;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class BestReplyTest extends TestCase
@@ -49,5 +50,20 @@ class BestReplyTest extends TestCase
         $this->assertFalse($replies[1]->fresh()->isBest());
 
     }
+
+  /** @test */
+  function if_a_best_reply_is_deleted_then_the_thread_is_properly_updated_to_reflect_that()
+  {
+      $this->signIn();
+
+      $reply = Reply::factory()->create(['user_id' => auth()->id()]);
+
+      $reply->thread->$reply;
+
+      $this->deleteJson(route('replies.destroy', $reply));
+
+      $this->assertNull($reply->thread->fresh()->best_reply_id);
+
+  }
 
 }

@@ -133,7 +133,7 @@ class Thread extends Model
 
     public function markBestReply(Reply $reply)
     {
-        $reply->thread->update(['best_reply_id' => $reply->id]);
+        $reply->update(['best_reply_id' => $reply->id]);
 
     }
 

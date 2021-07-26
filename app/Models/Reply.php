@@ -101,5 +101,10 @@ class Reply extends Model
        return $this->thread->best_reply_id == $this->id;
     }
 
+    public function getIsBestAttribute()
+    {
+        return $this->isBest();
+    }
+
 }
 
