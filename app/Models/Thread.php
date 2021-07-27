@@ -10,13 +10,14 @@ use App\Events\ThreadReceivedNewReply;
 use App\Notifications\ThreadWasUpdated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Scout\Searchable;
 
 
 class Thread extends Model
 {
     use HasFactory;
 
-    use RecordsActivity;
+    use RecordsActivity, Searchable;
 
     protected $guarded = [];
 

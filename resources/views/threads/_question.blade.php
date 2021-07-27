@@ -1,13 +1,13 @@
 <div class="card" v-if="editing">
     <div class="card-header">
         <div class="level">
-            <input type="text" class="form-control" v-model="form-title">
+            <input type="text" class="form-control">
         </div>
     </div>
 
     <div class="card-body">
         <div class="form-group">
-            <textarea class="form-control" rows="10" v-model="form.body"></textarea>
+            <textarea class="form-control" rows="10"></textarea>
         </div>
     </div>
 
