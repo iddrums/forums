@@ -57,9 +57,9 @@ class ThreadsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Spam $spam, Recaptcha $recaptcha)
+    public function store(Spam $spam, Recaptcha $recaptcha)
     {
-        $this->validate($request, [
+        request()->validate([
           'title' => 'required',
           'body' => 'required',
           'channel_id' => 'required|exists:channels,id',

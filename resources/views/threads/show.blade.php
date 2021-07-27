@@ -12,31 +12,8 @@
 <thread-view :thread="{{ $thread }}" inline-template>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <div class="level">
-                        <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZG9nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="{{ $thread->creator->name }}" width="40" height="40" class="mr-3">
-                        <span class="flex">
-                            <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }} </a> posted:
-
-                            {{ $thread->title }}
-                        </span>
-
-                        @can ('update', $thread)
-                        <form action="{{ $thread->path() }}" method="POST">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-
-                            <button type="submit" class="btn btn-link">Delete Thread</button>
-                        </form>
-                        @endcan
-                    </div>
-                </div>
-                <div class="card-body">
-                  {{ $thread->body }}
-                </div>
-            </div>
+        <div class="col-md-8" v-cloak>
+         @include ('threads._question')
 
             <replies @added="repliesCount++" @removed="repliesCount--"></replies>
 
