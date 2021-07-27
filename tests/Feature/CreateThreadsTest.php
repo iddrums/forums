@@ -157,6 +157,7 @@ class CreateThreadsTest extends TestCase
 
     }
 
+
     /** @test */
     public function authorized_users_may_not_delete_threads()
     {

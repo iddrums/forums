@@ -24,6 +24,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/threads', [App\Http\Controllers\ThreadsController::class, 'index'])->name('threads');
 Route::get('/threads/create', [App\Http\Controllers\ThreadsController::class, 'create'])->name('create');
 Route::get('/threads/{channel}/{thread}', [App\Http\Controllers\ThreadsController::class, 'show']);
+Route::patch('/threads/{channel}/{thread}', [App\Http\Controllers\ThreadsController::class, 'update']);
+
+
 
 // Route::patch('/threads/{channel}/{thread}', [App\Http\Controllers\ThreadsController::class, 'update'])->name('threads.update');
 
