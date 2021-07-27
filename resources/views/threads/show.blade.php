@@ -12,7 +12,7 @@
 <thread-view :thread="{{ $thread }}" inline-template>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8" v-cloak>
+        <div class="col-md-8">
          @include ('threads._question')
 
             <replies @added="repliesCount++" @removed="repliesCount--"></replies>
