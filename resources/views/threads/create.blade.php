@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+
+@section ('header')
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -16,7 +21,7 @@
                     <form method="POST" action="/threads">
                            {{ csrf_field() }}
 
-                       
+
                      <div class="form-group">
                             <label for="channel_id">Choose a Channel:</label>
                             <select name="channel_id" id="channel_id" class="form-group" required>
@@ -38,9 +43,13 @@
                         </div>
 
                         <div class="form-group">
+                            <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                        </div>
+
+                        <div class="form-group">
                            <button type="submit" class="btn btn-primary">Publish</button>
                         <div>
-                        @if (count($errors)) 
+                        @if (count($errors))
                         <ul class="alert alert-danger">
                             @foreach ($errors->all() as $error)
                                <li>{{ $error }}</li>
@@ -49,7 +58,7 @@
                           @endif
                     </form>
 
-               
+
 
                 </div>
             </div>
