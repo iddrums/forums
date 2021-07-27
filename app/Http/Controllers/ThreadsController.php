@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Zttp\Zttp;
 use App\Trending;
 use App\Models\Thread;
 use App\Models\Channel;
+use App\Rules\Recaptcha;
 use App\Inspections\Spam;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -57,23 +57,14 @@ class ThreadsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Spam $spam)
+    public function store(Request $request, Spam $spam, Recaptcha $recaptcha)
     {
         $this->validate($request, [
           'title' => 'required',
           'body' => 'required',
-          'channel_id' => 'required|exists:channels,id'
+          'channel_id' => 'required|exists:channels,id',
+          'g-recaptcha-response' => ['required', $recaptcha]
         ]);
-
-       $response = Zttp::asFormParams()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret' => config('services.recaptcha.secret'),
-            'response' => $request->input('g-recaptcha-response'),
-            'remoteip' => $_SERVER['REMOTE_ADDR']
-        ]);
-
-        // if(! $response->json()['success']) {
-        //     throw new \Exception('Recaptcha failed');
-        // }
 
         $spam->detect(request('body'));
 
