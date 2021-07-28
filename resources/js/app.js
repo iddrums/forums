@@ -34,16 +34,17 @@ Vue.component('paginator', Paginator);
 import UserNotifications from './components/UserNotifications.vue';
 Vue.component('user-notifications', UserNotifications);
 
-// Vue.component('thread-view', require('./pages/Thread.vue'));
-
-import Thread from './pages/Thread.vue';
-Vue.component('thread-view', Thread);
 
 // Vue.component('avatar-form', require('./components/AvatarForm.vue'));
-
 import AvatarForm from './components/AvatarForm.vue';
 Vue.component('avatar-form', AvatarForm);
 
+import Wysiwyg from './components/Wysiwyg.vue';
+Vue.component('wysiwyg', Wysiwyg);
+
+// Vue.component('thread-view', require('./pages/Thread.vue'));
+import Thread from './pages/Thread.vue';
+Vue.component('thread-view', Thread);
 
 
 

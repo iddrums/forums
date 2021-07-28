@@ -7,7 +7,8 @@
 
     <div class="card-body">
         <div class="form-group">
-            <textarea class="form-control" rows="10"></textarea>
+            <wysiwyg v-model="form.body" :value="form.body"></wysiwyg>
+            {{-- <textarea class="form-control" rows="10"></textarea> --}}
         </div>
     </div>
 
@@ -44,7 +45,7 @@
     </div>
 
 
-    <div class="card-body" v-text="body"></div>
+    <div class="card-body" v-html="body"></div>
 
     <div class="card-footer" v-if="authorize('owns', thread)">
       <button type="button" class="btn btn-primary" @click="editing = true">Edit</button>
