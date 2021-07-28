@@ -23,16 +23,13 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/threads', [App\Http\Controllers\ThreadsController::class, 'index'])->name('threads');
 Route::get('/threads/create', [App\Http\Controllers\ThreadsController::class, 'create'])->name('create');
+Route::get('/threads/search', [App\Http\Controllers\SearchController::class, 'show']);
 Route::get('/threads/{channel}/{thread}', [App\Http\Controllers\ThreadsController::class, 'show']);
 Route::patch('/threads/{channel}/{thread}', [App\Http\Controllers\ThreadsController::class, 'update']);
-
-
-
-// Route::patch('/threads/{channel}/{thread}', [App\Http\Controllers\ThreadsController::class, 'update'])->name('threads.update');
-
 Route::delete('/threads/{channel}/{thread}', [App\Http\Controllers\ThreadsController::class, 'destroy']);
 Route::post('/threads', [App\Http\Controllers\ThreadsController::class, 'store'])->middleware('must-be-confirmed');
 Route::get('/threads/{channel}', [App\Http\Controllers\ThreadsController::class, 'index'])->name('threads');
+
 
 Route::post('/locked-threads/{thread}', [App\Http\Controllers\LockedThreadsController::class, 'store'])->name('locked-threads.store')->middleware('admin');
 Route::delete('/locked-threads/{thread}', [App\Http\Controllers\LockedThreadsController::class, 'destroy'])->name('locked-threads.destroy')->middleware('admin');
