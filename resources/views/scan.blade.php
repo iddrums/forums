@@ -5,7 +5,7 @@
        <ais-instant-search>
             <ais-index
                 app-id="{{ config('scout.algolia.id') }}"
-                app-key="{{ config('scout.algolia.key') }}"
+                api-key="{{ config('scout.algolia.key') }}"
                 index-name="threads"
 
                 >
