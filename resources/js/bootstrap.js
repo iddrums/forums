@@ -1,7 +1,11 @@
 window._ = require('lodash');
 window.Vue = require('vue').default;
 
+import InstantSearch from 'vue-instantsearch';
+
 window.events = new Vue();
+
+
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -21,6 +25,8 @@ try {
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
+
+ Vue.use(InstantSearch);
 
 window.axios = require('axios');
 

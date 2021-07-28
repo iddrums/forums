@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::view('scan', 'scan');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/threads', [App\Http\Controllers\ThreadsController::class, 'index'])->name('threads');
 Route::get('/threads/create', [App\Http\Controllers\ThreadsController::class, 'create'])->name('create');
