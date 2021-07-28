@@ -7,7 +7,7 @@
 
     <div class="card-body">
         <div class="form-group">
-            <wysiwyg v-model="form.body" :value="form.body"></wysiwyg>
+            <wysiwyg v-model="form.body"></wysiwyg>
             {{-- <textarea class="form-control" rows="10"></textarea> --}}
         </div>
     </div>
@@ -19,12 +19,12 @@
             <button type="button" class="btn btn-danger level-item" @click="resetForm">Cancel</button>
 
                 @can ('update', $thread)
-                <form action="{{ $thread->path() }}" method="POST" class="ml-a">
-                    {{ csrf_field() }}
-                    {{ method_field('DELETE') }}
+                    <form action="{{ $thread->path() }}" method="POST" class="ml-a">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
 
-                    <button type="submit" class="btn btn-link">Delete Thread</button>
-                </form>
+                        <button type="submit" class="btn btn-link">Delete Thread</button>
+                    </form>
                 @endcan
 
         </div>

@@ -28,7 +28,7 @@
                         </p>
 
                         <p>
-                        //    <button type="button" class="btn btn-success" {{ json_encode($thread->isSubscribedTo) }} v-if="signedIn">Subscribe</button>
+                        //  <button type="button" class="btn btn-success" {{ json_encode($thread->isSubscribedTo) }} v-if="signedIn">Subscribe</button>
 
                             <subscribe-button type="button" :active="{{ json_encode($thread->isSubscribedTo) }}"  v-if="signedIn"></subscribe-button>
 

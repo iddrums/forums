@@ -20,7 +20,8 @@
                 <div v-if="editing">
                     <form @submit="update">
                         <div class="form-group">
-                            <textarea class="form-control" v-model="body" required></textarea>
+                            <wysiwyg v-model="body"></wysiwyg>
+                            <!-- <textarea class="form-control" v-model="body" required></textarea> -->
                         </div>
 
                             <button class="btn btn-xs btn-primary">Update</button>
@@ -47,11 +48,12 @@
 <script>
 import Favorite from './Favorite.vue';
 import moment from 'moment';
+import Wysiwyg from './Wysiwyg.vue';
 
     export default {
         props: ['reply'],
 
-        components: { Favorite },
+        components: { Favorite, Wysiwyg },
 
         data() {
             return {

@@ -26,18 +26,18 @@
                      <a href="{{ $thread->path() }}">
                             {{ $thread->replies_count }} {{ Str::plural('reply', $thread->replies_count) }}
                      </a>
-                    </div>
+                 </div>
+              </div>
 
 
-                <div class="body">
-                    {{ $thread->body }}
+                <div class="card-body">
+                    <div class="body">{{ !! $thread->body }}</div>
                 </div>
 
                 <div class="card-footer">
                   {{ $thread->visits }} Visits
                 </div>
           </div>
-      </div>
     @empty
          <p>There are no relevant results at this time.</p>
 @endforelse

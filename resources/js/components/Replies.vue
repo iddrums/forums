@@ -25,7 +25,7 @@ export default {
   mixins: [collection],
 
     data() {
-     return { dataSet: false };
+      return { dataSet: false };
     },
 
 
@@ -35,7 +35,7 @@ export default {
     },
 
     methods: {
-        fectch(page) {
+        fetch(page) {
           axios.get(this.url(page)).then(this.refresh);
         },
 
